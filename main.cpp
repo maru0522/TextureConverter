@@ -2,7 +2,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <cassert>
+#include <cassert>Å@
 
 enum class Argument
 {
