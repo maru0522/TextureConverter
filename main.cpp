@@ -3,8 +3,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
+#include <filesystem>
 
-enum class Argument
+enum Argument
 {
     kApplicationPath,
     kFilePath,
@@ -16,13 +17,25 @@ int main(int argc, char* argv[]) {
 
     assert(argc >= (int)Argument::kApplicationPath);
 
+    // コマンドライン引数指定なし
+    if (argc < NumArgument)
+    {
+        TextureConverter::OutputUsage();
+        return 0;
+    }
+
     // COMライブラリの初期化
     HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     assert(SUCCEEDED(hr));
 
+    int numOptions = argc - NumArgument;
+    char** options = argv + NumArgument;
+
     // コンバーターの宣言と変換
     TextureConverter converter;
-    converter.ConvertTextureWICToDDS(argv[(size_t)Argument::kFilePath]);
+    //std::filesystem::path path = static_cast<std::filesystem::path>(argv[(size_t)Argument::kFilePath]);
+    std::filesystem::path path = argv[kFilePath];
+    converter.ConvertTextureWICToDDS(path,numOptions,options);
 
 
     // COMライブラリの終了
@@ -37,6 +50,6 @@ int main(int argc, char* argv[]) {
     //    printf("\n");
     //}
 
-    system("pause");
+    //system("pause");
     return 0;
 }

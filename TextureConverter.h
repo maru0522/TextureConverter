@@ -6,12 +6,14 @@
 class TextureConverter
 {
 public:
+    static void OutputUsage(void);
+
     // ä÷êî
-    void ConvertTextureWICToDDS(const std::filesystem::path& filePath);
+    void ConvertTextureWICToDDS(const std::filesystem::path& filePath, int numOptions = 0, char* options[] = nullptr);
 
 private:
     void LoadWICTextureFromFile(const std::filesystem::path& filePath);
-    void SaveDDSTextureToFile(void);
+    void SaveDDSTextureToFile(int numOptions, char* options[]);
 
     // ïœêî
     DirectX::TexMetadata metadata_;
